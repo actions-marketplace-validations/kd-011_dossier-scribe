@@ -1,0 +1,31 @@
+{
+  "name": "dossier-scribe",
+  "version": "0.1.0",
+  "description": "Keep per-project docs true: every claim cites its source file, and drift is reported per claim.",
+  "type": "module",
+  "bin": {
+    "dossier-scribe": "bin/dossier-scribe.mjs",
+    "dscribe": "bin/dossier-scribe.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "documentation",
+    "docs",
+    "drift",
+    "git",
+    "cli"
+  ],
+  "license": "MIT"
+}

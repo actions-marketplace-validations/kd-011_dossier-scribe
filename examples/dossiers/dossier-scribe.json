@@ -1,0 +1,7 @@
+{
+  "dossiers": "dossiers",
+  "reposRoot": ".",
+  "requireCitations": ["Features", "Architecture", "Data", "Deploy"],
+  "collectors": ["package", "docker", "env", "git", "filetypes"],
+  "thresholds": { "amberDays": 30, "redDays": 90, "redStale": 3 }
+}

@@ -5,6 +5,8 @@ Docs rot silently, and "this doc is 90 days old" is not actionable, whereas "thi
 
 Node 22, ES modules, zero dependencies, MIT.
 
+![dossier-scribe check: one stale claim and one broken claim after a cited file changes](docs/screenshots/terminal.png)
+
 ## Try it in 30 seconds
 
 ```sh

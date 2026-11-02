@@ -30,3 +30,9 @@ Signed-off-by: Your Name <you@example.com>
 ```
 
 The full text is at https://developercertificate.org. Pull requests with unsigned commits will be asked to amend them.
+
+## Dependency updates and CI
+
+Dependabot proposes GitHub Actions updates weekly. Patch and minor updates, and any update to an action from the `actions/` organisation, merge on their own once the required checks pass. Other major updates wait for a person. CI runs `node --test` on Node 22 and 24, and also once a week so the badge reflects the real state of `main`.
+
+A weekly job checks the links in the README and runs `dossier-scribe check` against this repository's own dossier in `dossiers/`. If a cited file changed, it opens one issue. To clear it, re-read the cited files, fix the claims that are no longer true, run `dossier-scribe pin` and commit the dossier and lock.

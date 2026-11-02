@@ -44,5 +44,5 @@ test('packaging and CI files exist', () => {
   const ci = readFileSync(join(ROOT, '.github/workflows/ci.yml'), 'utf8');
   assert.match(ci, /node --test/);
   assert.match(ci, /22/);
-  assert.match(readFileSync(join(ROOT, '.github/dependabot.yml'), 'utf8'), /github-actions[\s\S]*monthly/);
+  assert.match(readFileSync(join(ROOT, '.github/dependabot.yml'), 'utf8'), /github-actions[\s\S]*weekly/);
 });

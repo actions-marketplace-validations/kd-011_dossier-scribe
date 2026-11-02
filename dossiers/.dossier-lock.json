@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "docs": {
+    "dossier-scribe": {
+      "claims": {
+        "67eb23538a3e": {
+          "text": "Runs on Node 22 or newer.",
+          "line": 14,
+          "specs": [
+            "package.json:17-19"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "package.json": {
+              "path": "package.json",
+              "blob": "78f3c11bb582ca411e5f6279e735b3d5d791fa1c",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 17,
+                "end": 19,
+                "hash": "19df611936662203503306c682fc28ff99b017e5"
+              }
+            }
+          }
+        },
+        "21119e4af9c2": {
+          "text": "Installs two commands that point at the same script: `dossier-scribe` and the short alias `dscribe`.",
+          "line": 15,
+          "specs": [
+            "package.json:6-9"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "package.json": {
+              "path": "package.json",
+              "blob": "78f3c11bb582ca411e5f6279e735b3d5d791fa1c",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 6,
+                "end": 9,
+                "hash": "2634b79ac93a426fdae2b251abd5abac200a2b76"
+              }
+            }
+          }
+        },
+        "888b73a77d98": {
+          "text": "Has no runtime or development dependencies, only Node built-ins.",
+          "line": 16,
+          "specs": [
+            "package.json"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "package.json": {
+              "path": "package.json",
+              "blob": "78f3c11bb582ca411e5f6279e735b3d5d791fa1c",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e"
+            }
+          }
+        },
+        "2cc3ea71ebce": {
+          "text": "Gives each claim a stable id from a hash of its normalised text, so editing a claim shows the old id as removed and the new one as new.",
+          "line": 17,
+          "specs": [
+            "src/claims.mjs:15-17"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/claims.mjs": {
+              "path": "src/claims.mjs",
+              "blob": "56736871010c6d89490fe3fcc9613fcddedd2ae4",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 15,
+                "end": 17,
+                "hash": "555a8e87445d68adf581f1183bcc6921ae91c53f"
+              }
+            }
+          }
+        },
+        "5cf543f1a33b": {
+          "text": "A cited line range pins a hash of just those lines, so edits elsewhere in the file leave the claim ok.",
+          "line": 18,
+          "specs": [
+            "src/pin.mjs:12",
+            "src/check.mjs:35-36"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/pin.mjs": {
+              "path": "src/pin.mjs",
+              "blob": "5721cf74a1ca9231fba0875fc6750b5c15d52523",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 12,
+                "end": 12,
+                "hash": "a8f115f92734b73fa697230cae08eccfd224021e"
+              }
+            },
+            "src/check.mjs": {
+              "path": "src/check.mjs",
+              "blob": "44fb67811699c84af4ce496f258ffb310378e77a",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 35,
+                "end": 36,
+                "hash": "10f4011f7285174eae45403a42b97c7cd2173864"
+              }
+            }
+          }
+        },
+        "35a4977f7fdb": {
+          "text": "Labels each claim ok, stale, broken, new or removed, and reports a claim with no citation as uncited.",
+          "line": 19,
+          "specs": [
+            "src/check.mjs",
+            "src/commands/check.mjs:8"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/check.mjs": {
+              "path": "src/check.mjs",
+              "blob": "44fb67811699c84af4ce496f258ffb310378e77a",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e"
+            },
+            "src/commands/check.mjs": {
+              "path": "src/commands/check.mjs",
+              "blob": "3c709a33b8fdec9cda23c6610d530bca609a1839",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 8,
+                "end": 8,
+                "hash": "72c8467d79fdffb1e7213b0e5ba82425418639c8"
+              }
+            }
+          }
+        },
+        "ccd124c80703": {
+          "text": "`check` exits 0 when clean and 1 on findings, and a usage or config error exits 2.",
+          "line": 20,
+          "specs": [
+            "src/commands/check.mjs:37",
+            "src/cli.mjs:59-61"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/commands/check.mjs": {
+              "path": "src/commands/check.mjs",
+              "blob": "3c709a33b8fdec9cda23c6610d530bca609a1839",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 37,
+                "end": 37,
+                "hash": "3422a0be3e963939e31cbf52958b6f1b33ec0782"
+              }
+            },
+            "src/cli.mjs": {
+              "path": "src/cli.mjs",
+              "blob": "c0cf91a08d49aa30d212ab55297cf27172c1745d",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 59,
+                "end": 61,
+                "hash": "2da6df52e2355b03304c1d09638bd2da06b5d838"
+              }
+            }
+          }
+        },
+        "3c5c0db1fda5": {
+          "text": "Rating a dossier red uses the broken count, the stale count against `redStale`, and days since it was verified.",
+          "line": 21,
+          "specs": [
+            "src/check.mjs:6-10"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/check.mjs": {
+              "path": "src/check.mjs",
+              "blob": "44fb67811699c84af4ce496f258ffb310378e77a",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 6,
+                "end": 10,
+                "hash": "7c76ea01939f915e14af64d2db1f519f92d9ec45"
+              }
+            }
+          }
+        },
+        "07f2ea7d3112": {
+          "text": "The HTML report has no JavaScript and escapes text taken from dossiers.",
+          "line": 22,
+          "specs": [
+            "src/report.mjs"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/report.mjs": {
+              "path": "src/report.mjs",
+              "blob": "6d368e19ee6fb704a79803c2353081be5a3fb3ea",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e"
+            }
+          }
+        },
+        "f611031a6bc5": {
+          "text": "The env collector records variable names only, never values.",
+          "line": 23,
+          "specs": [
+            "src/collectors.mjs:125-137"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/collectors.mjs": {
+              "path": "src/collectors.mjs",
+              "blob": "9f50fb8fff75fed90e2b55e695e844f23d8a20b2",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 125,
+                "end": 137,
+                "hash": "d87093518e55ea9e11f709e58cb08c38a0a70b9d"
+              }
+            }
+          }
+        },
+        "3b9fd23e4ff3": {
+          "text": "`queue` stops the same dossier being queued twice within a cooldown and caps tasks per day.",
+          "line": 24,
+          "specs": [
+            "src/commands/queue.mjs:24",
+            "src/commands/queue.mjs:59",
+            "src/config.mjs:14"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/commands/queue.mjs": {
+              "path": "src/commands/queue.mjs",
+              "blob": "91f37ea70fedd15dbfdecd7df8b66b7b89d6da50",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 24,
+                "end": 24,
+                "hash": "84b516157e2dece482613a92da923a1dbec032b9"
+              }
+            },
+            "src/commands/queue.mjs:59-59": {
+              "path": "src/commands/queue.mjs",
+              "blob": "91f37ea70fedd15dbfdecd7df8b66b7b89d6da50",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 59,
+                "end": 59,
+                "hash": "af408a9742c99f49216538b5abf7e1deb1041aa4"
+              }
+            },
+            "src/config.mjs": {
+              "path": "src/config.mjs",
+              "blob": "1c7aa207536b781aa495fd24cd1bfae131b1177b",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 14,
+                "end": 14,
+                "hash": "ebacf88ce0e7f0ed8feabdf433f1f5c1ce61d0e4"
+              }
+            }
+          }
+        },
+        "7c62f1e2d57d": {
+          "text": "All git reads are against HEAD, listing the tree in one call and reading ranged files in one batch.",
+          "line": 28,
+          "specs": [
+            "src/git.mjs:47-80"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/git.mjs": {
+              "path": "src/git.mjs",
+              "blob": "ed5d23b15de7da1f12f2518a4a74f25018032514",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 47,
+                "end": 80,
+                "hash": "fd15a08ea2d7354d162aab750f23d366d5d37ed5"
+              }
+            }
+          }
+        },
+        "42b9644b366c": {
+          "text": "The lock file lives in the dossiers directory as `.dossier-lock.json`.",
+          "line": 29,
+          "specs": [
+            "src/lock.mjs:5"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            "src/lock.mjs": {
+              "path": "src/lock.mjs",
+              "blob": "f1574a1fdd009ba52995d4e60edc3e039a27e34f",
+              "commit": "4e57527333f96b75efeed9776bba7e630d38976e",
+              "range": {
+                "start": 5,
+                "end": 5,
+                "hash": "09b97f8fa2f6667f66bf4f187ffdbf17a47d7bb2"
+              }
+            }
+          }
+        },
+        "764bd69033c6": {
+          "text": "CI runs `node --test` on Node 22 and 24 for every pull request and once a week.",
+          "line": 33,
+          "specs": [
+            ".github/workflows/ci.yml:9-10",
+            ".github/workflows/ci.yml:24"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            ".github/workflows/ci.yml": {
+              "path": ".github/workflows/ci.yml",
+              "blob": "71748fcc111723987d06da9b13d5ba380870aefb",
+              "commit": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+              "range": {
+                "start": 9,
+                "end": 10,
+                "hash": "efa44788df60d80e0cdfdc8cd387ade5e298f757"
+              }
+            },
+            ".github/workflows/ci.yml:24-24": {
+              "path": ".github/workflows/ci.yml",
+              "blob": "71748fcc111723987d06da9b13d5ba380870aefb",
+              "commit": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+              "range": {
+                "start": 24,
+                "end": 24,
+                "hash": "15dd520b8b26147365ab494c73091525b65b99af"
+              }
+            }
+          }
+        },
+        "25d772a7b622": {
+          "text": "Dependabot opens grouped weekly updates for GitHub Actions and qualifying ones merge automatically once CI is green.",
+          "line": 34,
+          "specs": [
+            ".github/dependabot.yml",
+            ".github/scripts/automerge-eligible.mjs"
+          ],
+          "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5",
+          "files": {
+            ".github/dependabot.yml": {
+              "path": ".github/dependabot.yml",
+              "blob": "5e3a090199e4384ea98a662632c33699793ce495",
+              "commit": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5"
+            },
+            ".github/scripts/automerge-eligible.mjs": {
+              "path": ".github/scripts/automerge-eligible.mjs",
+              "blob": "4d76b76561799212bec89214b6695491b6ea0f60",
+              "commit": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5"
+            }
+          }
+        }
+      },
+      "pinnedAt": "2026-11-02T13:15:12.094Z",
+      "head": "c68643bf63ba6766be40aab9ccb5c0e93ce839e5"
+    }
+  }
+}

@@ -1,5 +1,7 @@
 # dossier-scribe
 
+[![ci](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml)
+
 A small CLI that keeps per-project docs true: every factual claim in a doc cites the file it came from, a lock file pins what those files looked like when the doc was last checked, and `check` tells you exactly which claims have drifted.
 Docs rot silently, and "this doc is 90 days old" is not actionable, whereas "this one bullet cites a file that changed" is.
 

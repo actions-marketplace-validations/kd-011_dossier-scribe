@@ -1,6 +1,6 @@
 # Contributing
 
-Bug reports, fixes and small features are welcome. For anything larger than a fix, open an issue first so we can agree on the shape before you spend time on it.
+Bug reports, fixes and small features are welcome. For anything bigger than a fix, open an issue first so we can agree on the approach before you put time into it.
 
 ## Ground rules
 
@@ -23,7 +23,7 @@ Write the failing test first, watch it fail for the right reason, then make it p
 
 ## Sign-off (DCO)
 
-There is no CLA. Instead every commit carries a Developer Certificate of Origin sign-off, which says you wrote the change or have the right to submit it under the project licence (MIT). Add it with `git commit -s`:
+There is no CLA. Every commit carries a Developer Certificate of Origin sign-off, which says you wrote the change or have the right to submit it under the project licence (MIT). Add it with `git commit -s`:
 
 ```
 Signed-off-by: Your Name <you@example.com>
@@ -33,6 +33,6 @@ The full text is at https://developercertificate.org. Pull requests with unsigne
 
 ## Dependency updates and CI
 
-Dependabot proposes GitHub Actions updates weekly. Patch and minor updates, and any update to an action from the `actions/` organisation, merge on their own once the required checks pass. Other major updates wait for a person. CI runs `node --test` on Node 22 and 24, and also once a week so the badge reflects the real state of `main`.
+Dependabot proposes GitHub Actions updates weekly. Patch and minor updates, and any update to an action from the `actions/` organisation, merge on their own once the required checks pass. Other major updates wait for a person. CI runs `node --test` on Node 22 and 24, and once a week so the badge shows the real state of `main`.
 
 A weekly job checks the links in the README and runs `dossier-scribe check` against this repository's own dossier in `dossiers/`. If a cited file changed, it opens one issue. To clear it, re-read the cited files, fix the claims that are no longer true, run `dossier-scribe pin` and commit the dossier and lock.

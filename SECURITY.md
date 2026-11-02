@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Please use GitHub private vulnerability reporting: open the Security tab of this repository and choose "Report a vulnerability". That keeps the report private until a fix is out. Please do not open a public issue for something exploitable.
+Use GitHub private vulnerability reporting: open the Security tab of this repository and choose "Report a vulnerability". The report stays private until a fix is out. Do not open a public issue for something exploitable.
 
 Include what you ran, what you expected and what happened. A small repository that reproduces it helps most.
 

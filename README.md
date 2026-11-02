@@ -2,8 +2,8 @@
 
 [![ci](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml)
 
-A small CLI that keeps per-project docs true: every factual claim in a doc cites the file it came from, a lock file pins what those files looked like when the doc was last checked, and `check` tells you exactly which claims have drifted.
-Docs rot silently, and "this doc is 90 days old" is not actionable, whereas "this one bullet cites a file that changed" is.
+A small CLI that keeps per-project docs true. Every factual claim in a doc cites the file it came from, a lock file pins what those files looked like when the doc was last checked, and `check` tells you which claims have drifted.
+Docs rot silently. "This doc is 90 days old" gives you nothing to act on, but "this bullet cites a file that changed" does.
 
 Node 22, ES modules, zero dependencies, MIT.
 
@@ -44,7 +44,7 @@ dossier-scribe works per claim. A claim is a list item or paragraph that ends wi
 - Sessions are signed with HMAC. <!-- src: lib/auth.mjs -->
 ```
 
-That bullet is stale exactly when `lib/auth.mjs` changed since the doc was pinned. Nothing else matters to it.
+That bullet is stale only when `lib/auth.mjs` has changed since the doc was pinned.
 
 ```
  doc.md                         .dossier-lock.json                  repo at HEAD
@@ -58,7 +58,7 @@ That bullet is stale exactly when `lib/auth.mjs` changed since the doc was pinne
                                                                     => ok
 ```
 
-- `pin` records, per claim, a stable id (a hash of the normalised claim text), the cited paths, the git blob hash of each file at HEAD, and the commit. It also sets `last_verified` to today. Pinning is you saying "I checked these claims against these files just now".
+- `pin` records, per claim, a stable id (a hash of the normalised claim text), the cited paths, the git blob hash of each file at HEAD, and the commit. It also sets `last_verified` to today. Pinning means you checked these claims against these files just now.
 - `check` compares the lock with the repo now and labels every claim `ok`, `STALE`, `BROKEN`, `NEW` or `REMOVED`.
 - A line range (`lib/auth.mjs:12-40`) pins a hash of just those lines, so edits elsewhere in the file leave the claim `ok`.
 - Editing a claim's text gives it a new id: the old id shows as `REMOVED` and the new one as `NEW` until you pin.
@@ -97,11 +97,11 @@ Takes orders from the storefront and hands them to fulfilment.
 <!-- auto:end -->
 ```
 
-**Frontmatter.** `slug` (lowercase, digits, hyphens), `name`, `repo`, `status`, `last_verified` (`YYYY-MM-DD`), optional `tags`. `repo` is a path relative to the configured repos root, or `.` for single-repo use.
+The frontmatter takes `slug` (lowercase, digits, hyphens), `name`, `repo`, `status`, `last_verified` (`YYYY-MM-DD`) and optional `tags`. `repo` is a path relative to the configured repos root, or `.` for single-repo use.
 
-The frontmatter parser handles a documented subset, because Node has no YAML parser: `key: value`, `"double"` and `'single'` quoted strings, flat inline lists `[a, "b, c"]`, `true`/`false`, and dates as plain strings. Full-line `#` comments and blank lines are fine. Anything else (nesting, block lists, block scalars, flow maps, anchors, trailing comments, duplicate keys) is rejected with a line-numbered error. It is not a YAML implementation and does not try to be.
+The frontmatter parser handles a documented subset, because Node has no YAML parser: `key: value`, `"double"` and `'single'` quoted strings, flat inline lists `[a, "b, c"]`, `true`/`false`, and dates as plain strings. Full-line `#` comments and blank lines are fine. Anything else (nesting, block lists, block scalars, flow maps, anchors, trailing comments, duplicate keys) is rejected with a line-numbered error.
 
-**Claims.** A list item or paragraph ending in `<!-- src: ... -->`. The comment takes a comma-separated list of paths relative to the repo:
+A claim is a list item or paragraph ending in `<!-- src: ... -->`. The comment takes a comma-separated list of paths relative to the repo:
 
 | Form | Meaning |
 | --- | --- |
@@ -111,9 +111,9 @@ The frontmatter parser handles a documented subset, because Node has no YAML par
 
 A claim with no comment is *uncited*. `lint` reports uncited claims only under sections the config marks as requiring citations (default: Features, Architecture, Data, Deploy). Items elsewhere are free prose.
 
-**Auto block.** Everything between `<!-- auto:start -->` and `<!-- auto:end -->` belongs to the tool. `auto` rewrites it and nothing else, and its contents never count as claims.
+Everything between `<!-- auto:start -->` and `<!-- auto:end -->` belongs to the tool. `auto` rewrites that block and nothing else, and its contents never count as claims.
 
-**Config.** `dossier-scribe.json` in the working directory (or `--root DIR`):
+Config lives in `dossier-scribe.json` in the working directory (or `--root DIR`):
 
 ```json
 {
@@ -163,7 +163,7 @@ pinned acme-web: 2 claims, last_verified 2026-11-01
 
 ### `check [slug] [--json] [--since X] [--fail-on LIST]`
 
-The command the whole tool exists for (sample output above). Per claim: `ok`, `STALE` (a cited file, or the cited line range, changed: with the commits since the pin and a diffstat), `BROKEN` (cited file deleted or renamed, with `renamed to` when git can follow it), `NEW` (not in the lock), `REMOVED` (in the lock, gone from the doc). Per doc: counts, days since verified, commits since.
+The main command (sample output above). Per claim: `ok`, `STALE` (a cited file, or the cited line range, changed: with the commits since the pin and a diffstat), `BROKEN` (cited file deleted or renamed, with `renamed to` when git can follow it), `NEW` (not in the lock), `REMOVED` (in the lock, gone from the doc). Per doc: counts, days since verified, commits since.
 
 `--fail-on stale,broken,uncited` picks what sets exit 1; the default is `stale,broken`, and `new` and `removed` are also accepted. `--since 7d|2026-03-01|<git ref>` hides drift whose changes are all older than the cutoff. `--json` includes a `stats.gitCalls` count: a check makes a handful of git calls per repo, not one per claim, so it stays fast on large repos.
 
@@ -243,14 +243,14 @@ dossier-scribe queue --format claude-code --out tasks
 cat tasks/orders-service.prompt.md   # paste into your agent
 ```
 
-To automate that, `--dispatch-cmd` pipes each task to a command on stdin. It is off by default, agent-agnostic, and bounded by `--max` per day and the per-doc cooldown:
+To automate that, `--dispatch-cmd` pipes each task to a command on stdin. It is off by default and works with any agent. `--max` per day and the per-doc cooldown still apply:
 
 ```sh
 dossier-scribe queue --format claude-code --max 3 \
   --dispatch-cmd 'my-agent --prompt-from-stdin'
 ```
 
-The command runs through `sh -c` with `DSCRIBE_SLUG` and `DSCRIBE_TASK_FILE` in its environment. A non-zero exit makes `queue` exit 1 and does not start that doc's cooldown. The agent is expected to edit the dossier and run `dossier-scribe pin <slug>` itself; a human review of the resulting diff is a good idea, because the tool can prove a file changed but not that the agent's rewrite is right.
+The command runs through `sh -c` with `DSCRIBE_SLUG` and `DSCRIBE_TASK_FILE` in its environment. A non-zero exit makes `queue` exit 1 and does not start that doc's cooldown. The agent is expected to edit the dossier and run `dossier-scribe pin <slug>` itself. Read the resulting diff: the tool can show that a file changed, but it cannot tell you the agent's rewrite is right.
 
 ## GitHub Actions: nightly drift issues
 
@@ -274,8 +274,8 @@ dossier-scribe check --fail-on stale,broken
 
 ## Limits
 
-- It proves that a cited file changed, not that the claim is now wrong. Most drift reports will be a claim that is still true. `verify` and a person (or agent) decide.
-- It cannot verify claims about runtime behaviour or external systems: "latency is under 50ms", "the staging database is Postgres 16", "the vendor rate-limits at 100 rps". If a claim has no file that would change when it stops being true, it cannot be cited, and this tool cannot help.
+- It shows that a cited file changed. It cannot show that the claim is now wrong, and most drift reports will be about a claim that is still true. `verify` and a person (or agent) decide.
+- It cannot verify claims about runtime behaviour or external systems: "latency is under 50ms", "the staging database is Postgres 16", "the vendor rate-limits at 100 rps". A claim with no file that would change when it stops being true cannot be cited, so this tool cannot help.
 - A claim is only as good as its citations. Cite the narrowest file or line range that would change if the claim stopped being true.
 - Reads are against `HEAD`, not the working tree.
 - Not a YAML parser, not Windows-tested, no network, no database, no daemon.

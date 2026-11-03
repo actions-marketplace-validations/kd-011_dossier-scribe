@@ -71,10 +71,12 @@ test('changing lines outside a cited range stays ok; inside the range goes stale
   assert.equal(ws.statuses()['The ranged helper '], 'stale');
 });
 
-test('inserting lines above a range shifts it: the claim is stale', () => {
+// Was 'stale' until 0.2.0. On express, five of six ranged claims went stale in a year because comments
+// were added above them. The cited lines were unchanged, so it is now its own state (see moved.test.mjs).
+test('inserting lines above a range shifts it: the claim is moved, not stale', () => {
   const ws = pinnedWorkspace();
   ws.commit({ 'lib/ranged.mjs': 'new first line\n' + lines(10, 'ranged') });
-  assert.equal(ws.statuses()['The ranged helper '], 'stale');
+  assert.equal(ws.statuses()['The ranged helper '], 'moved');
 });
 
 test('renaming a cited file is BROKEN with a rename hint', () => {

@@ -5,7 +5,7 @@ import { checkDocs, formatCheck, parseSince } from '../check.mjs';
 import { stats } from '../git.mjs';
 import { UsageError } from '../util.mjs';
 
-const STATES = ['stale', 'broken', 'new', 'removed', 'uncited'];
+const STATES = ['stale', 'broken', 'new', 'moved', 'removed', 'uncited'];
 
 export function failOnSet(spec) {
   const set = spec.split(',').map((s) => s.trim()).filter(Boolean);
@@ -32,7 +32,7 @@ export async function run(ctx, args, io) {
   else {
     for (const l of formatCheck(results)) io.out(l);
     const tot = (k) => results.reduce((n, r) => n + (r.summary?.[k] ?? 0), 0);
-    io.out(`check: ${results.length} dossier(s), ${tot('ok')} ok, ${tot('stale')} stale, ${tot('broken')} broken, ${tot('new')} new`);
+    io.out(`check: ${results.length} dossier(s), ${tot('ok')} ok, ${tot('stale')} stale, ${tot('broken')} broken, ${tot('new')} new${tot('moved') ? `, ${tot('moved')} moved` : ''}`);
   }
   return failed ? 1 : 0;
 }

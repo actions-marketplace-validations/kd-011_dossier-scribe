@@ -1,7 +1,7 @@
 {
   "name": "dossier-scribe",
-  "version": "0.1.0",
-  "description": "Keep per-project docs true: every claim cites its source file, and drift is reported per claim.",
+  "version": "0.2.0",
+  "description": "Keep project docs true: every claim cites a source file, and drift is reported per claim.",
   "type": "module",
   "bin": {
     "dossier-scribe": "bin/dossier-scribe.mjs",
@@ -23,9 +23,20 @@
   "keywords": [
     "documentation",
     "docs",
+    "docs-as-code",
     "drift",
+    "stale-docs",
     "git",
-    "cli"
+    "cli",
+    "markdown"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/kd-011/dossier-scribe#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kd-011/dossier-scribe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kd-011/dossier-scribe/issues"
+  }
 }

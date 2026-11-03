@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -69,18 +69,25 @@ Static front end served by nginx.
 - The image serves on port 8080. <!-- src: Dockerfile -->
 `));
 
+  const claim = readFileSync(join(dir, 'dossiers/acme-api.md'), 'utf8').split('\n').findIndex((l) => l.startsWith('- Sessions are signed')) + 1;
+  io.out(`\ndossiers/acme-api.md, line ${claim}:`);
+  io.out(`  ${readFileSync(join(dir, 'dossiers/acme-api.md'), 'utf8').split('\n')[claim - 1]}`);
+
   const step = async (label, argv) => {
     io.out(`\n$ ${label}`);
     return main(['--root', dir, ...argv]);
   };
   await step('dossier-scribe pin --all', ['pin', '--all']);
 
-  io.out('\n(a teammate changes how sessions are signed, and renames the db module)');
+  io.out('\n(a teammate changes how sessions are signed, then renames the db module)');
   const api = join(dir, 'repos', 'acme-api');
   put(api, 'src/auth.js', 'import { sign as edSign } from "node:crypto";\n\nexport function sign(session, privateKey) {\n  return edSign(null, Buffer.from(JSON.stringify(session)), privateKey).toString("hex");\n}\n');
   put(api, 'src/rate-limit.js', API['src/rate-limit.js'] + 'export const reset = () => hits.clear();\n');
   sh(api, 'add', '-A');
   sh(api, 'commit', '-q', '-m', 'Sign sessions with ed25519');
+  io.out('\n$ git show -U0 HEAD -- src/auth.js');
+  const shown = spawnSync('git', ['show', '-U0', '--format=%h  %s', 'HEAD', '--', 'src/auth.js'], { cwd: api, encoding: 'utf8' }).stdout;
+  io.out(shown.split('\n').filter((l) => !/^(diff --git|index |--- |\+\+\+ )/.test(l)).join('\n').trimEnd());
   sh(api, 'mv', 'src/db.js', 'src/storage.js');
   sh(api, 'commit', '-q', '-m', 'Rename db module to storage');
 

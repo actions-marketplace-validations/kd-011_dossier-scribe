@@ -54,6 +54,6 @@ One sentence on what this project is.
     );
   }
   io.out('created dossier-scribe.json and dossiers/example.md');
-  io.out(`next: edit the example, commit ${cite}, then run: dossier-scribe lint && dossier-scribe pin --all && dossier-scribe auto`);
+  io.out('next: edit dossiers/example.md so each claim cites a file that backs it, then run: dossier-scribe lint && dossier-scribe pin --all');
   return 0;
 }

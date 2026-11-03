@@ -61,20 +61,29 @@ export class Repo {
 
   /** Read many blobs at HEAD in a single `git cat-file --batch`. Returns Map path to Buffer. */
   readMany(paths, rev = 'HEAD') {
+    const found = this.batch(paths.map((p) => `${rev}:./${p}`));
+    return new Map(paths.filter((p) => found.has(`${rev}:./${p}`)).map((p) => [p, found.get(`${rev}:./${p}`)]));
+  }
+
+  /** Read blobs by sha in one `git cat-file --batch`. Returns Map sha to Buffer; unreadable shas are left out. */
+  readBlobs(shas) {
+    return this.batch(shas);
+  }
+
+  batch(specs) {
     const out = new Map();
-    if (paths.length === 0) return out;
-    const input = paths.map((p) => `${rev}:./${p}\n`).join('');
-    const r = exec(this.dir, ['cat-file', '--batch'], input);
+    if (specs.length === 0) return out;
+    const r = exec(this.dir, ['cat-file', '--batch'], specs.map((p) => `${p}\n`).join(''));
     const buf = r.stdout;
     let pos = 0;
-    for (const p of paths) {
+    for (const spec of specs) {
       const nl = buf.indexOf(0x0a, pos);
       const header = buf.toString('utf8', pos, nl);
       pos = nl + 1;
       const m = / blob (\d+)$/.exec(header);
       if (!m) continue;
       const size = Number(m[1]);
-      out.set(p, buf.subarray(pos, pos + size));
+      out.set(spec, buf.subarray(pos, pos + size));
       pos += size + 1;
     }
     return out;

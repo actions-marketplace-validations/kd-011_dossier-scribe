@@ -2,11 +2,30 @@ import { parse } from '../cli.mjs';
 import { loadDossiers } from '../dossiers.mjs';
 import { readLock, writeLock } from '../lock.mjs';
 import { checkDocs } from '../check.mjs';
-import { expandSources, lineSlice, pinDoc } from '../pin.mjs';
+import { expandSources, jsonKeyValue, lineSlice, pinDoc } from '../pin.mjs';
 import { UsageError } from '../util.mjs';
 
 const WHOLE_FILE_LINES = 40;
 const GLOB_FILE_LINES = 12;
+
+/** The file header and only those hunks of a unified diff whose old side overlaps lines start..end. */
+function hunksTouching(diff, start, end) {
+  const lines = diff.split('\n');
+  const first = lines.findIndex((l) => l.startsWith('@@'));
+  if (first === -1) return diff;
+  const out = lines.slice(0, first);
+  let keep = false;
+  for (const l of lines.slice(first)) {
+    const m = /^@@ -(\d+)(?:,(\d+))? /.exec(l);
+    if (m) {
+      const from = Number(m[1]);
+      const to = from + Math.max(Number(m[2] ?? 1), 1) - 1;
+      keep = from <= end && to >= start;
+    }
+    if (keep) out.push(l);
+  }
+  return out.join('\n');
+}
 
 export async function run(ctx, args, io) {
   const { values, pos } = parse(args, { claim: { type: 'string' }, ok: { type: 'boolean' } });
@@ -25,7 +44,7 @@ export async function run(ctx, args, io) {
     wanted = result.claims.filter((c) => c.id.startsWith(values.claim));
     if (wanted.length !== 1) throw new UsageError(wanted.length ? `claim id "${values.claim}" is ambiguous` : `no claim with id "${values.claim}" in ${doc.slug}`);
   } else {
-    wanted = result.claims.filter((c) => ['stale', 'broken', 'new'].includes(c.status));
+    wanted = result.claims.filter((c) => ['stale', 'broken', 'new', 'moved'].includes(c.status));
     if (wanted.length === 0) {
       io.out(`${doc.slug}: all ${result.summary.ok} cited claims match their pins`);
       return 0;
@@ -64,8 +83,20 @@ export async function run(ctx, args, io) {
       }
       const buf = blobs.get(e.path);
       const total = buf.toString('utf8').split('\n').length - (buf.toString('utf8').endsWith('\n') ? 1 : 0);
-      const [from, to] = e.range ? [e.range.start, e.range.end] : [1, Math.min(total, e.glob || glob ? GLOB_FILE_LINES : WHOLE_FILE_LINES)];
-      io.out(`  ${e.path}${e.range ? `:${from}-${to}` : ''}`);
+      if (e.jsonKey) {
+        io.out(`  ${e.path}#${e.jsonKey}`);
+        const v = jsonKeyValue(buf, e.jsonKey);
+        if (!v.found) io.out('       (key not found)');
+        else {
+          const shown = JSON.stringify(v.value, null, 2).split('\n');
+          shown.slice(0, WHOLE_FILE_LINES).forEach((l) => io.out(`       ${l}`));
+          if (shown.length > WHOLE_FILE_LINES) io.out(`       ... ${shown.length - WHOLE_FILE_LINES} more lines`);
+        }
+        continue;
+      }
+      const mv = e.range ? w.files.find((f) => f.change === 'moved' && f.path === e.path && f.range.start === e.range.start) : null;
+      const [from, to] = mv ? [mv.movedTo.start, mv.movedTo.end] : e.range ? [e.range.start, e.range.end] : [1, Math.min(total, e.glob || glob ? GLOB_FILE_LINES : WHOLE_FILE_LINES)];
+      io.out(`  ${e.path}${e.range ? `:${from}-${to}` : ''}${mv ? `  (moved from ${mv.range.start}-${mv.range.end}, update the numbers)` : ''}`);
       lineSlice(buf, from, to).split('\n').forEach((l, i) => io.out(`  ${String(from + i).padStart(4)} | ${l}`));
       if (!e.range && to < total) io.out(`       ... ${total - to} more lines`);
     }
@@ -73,11 +104,18 @@ export async function run(ctx, args, io) {
     if (drift.length && w.status === 'stale') {
       const base = lock.docs[doc.slug].claims[w.id].head;
       if (repo.isKnown(base)) {
-        const diffs = repo.diffs(base, drift.map((f) => f.path));
+        const diffs = repo.diffs(base, drift.filter((f) => !f.jsonKey).map((f) => f.path));
         for (const f of drift) {
           io.out('');
-          io.out(`  changes to ${f.path} since the pin:`);
-          for (const l of (diffs.get(f.path) ?? '').split('\n').slice(0, 60)) io.out(`  ${l}`);
+          if (f.jsonKey) {
+            io.out(`  ${f.path}#${f.jsonKey} since the pin:`);
+            io.out(`  was ${f.was ?? '(too long to show)'}`);
+            io.out(`  now ${f.now ?? '(too long to show)'}`);
+            continue;
+          }
+          io.out(`  changes to ${f.path}${f.range ? `:${f.range.start}-${f.range.end}` : ''} since the pin:`);
+          const diff = f.range ? hunksTouching(diffs.get(f.path) ?? '', f.range.start, f.range.end) : (diffs.get(f.path) ?? '');
+          for (const l of diff.split('\n').slice(0, 60)) io.out(`  ${l}`);
         }
       }
     }

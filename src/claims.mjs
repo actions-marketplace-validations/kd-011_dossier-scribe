@@ -128,6 +128,8 @@ export function parseSpec(spec) {
   if (spec === '') return { error: 'empty path' };
   let s = spec.replace(/^\.\//, '');
   if (s.startsWith('/')) return { error: 'path must be relative to the repo, not absolute' };
+  const hash = s.indexOf('#');
+  if (hash !== -1) return parseKeySpec(spec, s.slice(0, hash), s.slice(hash + 1));
   let start = null;
   let end = null;
   const m = /^(.*):(\d+)(?:-(\d+))?$/.exec(s);
@@ -144,6 +146,16 @@ export function parseSpec(spec) {
   const glob = /[*?]/.test(s);
   if (glob && start !== null) return { error: 'line ranges cannot be combined with a glob' };
   return { spec, path: s, start, end, glob };
+}
+
+// path#a.b.c cites one value inside a JSON file, so a version bump does not touch it.
+function parseKeySpec(spec, path, key) {
+  if (path === '') return { error: 'empty path' };
+  if (key === '' || key.split('.').includes('')) return { error: 'empty key after "#", write path#engines.node' };
+  if (/[*?]/.test(path)) return { error: 'a JSON key cannot be combined with a glob' };
+  if (/:\d+(-\d+)?$/.test(path) || /:\d+(-\d+)?$/.test(key)) return { error: 'a JSON key cannot be combined with a line range' };
+  if (path.split('/').includes('..')) return { error: 'path must not contain ".."' };
+  return { spec, path, start: null, end: null, glob: false, jsonKey: key };
 }
 
 export function globToRegExp(glob) {

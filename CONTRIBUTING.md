@@ -36,3 +36,7 @@ The full text is at https://developercertificate.org. Pull requests with unsigne
 Dependabot proposes GitHub Actions updates weekly. Patch and minor updates, and any update to an action from the `actions/` organisation, merge on their own once the required checks pass. Other major updates wait for a person. CI runs `node --test` on Node 22 and 24, and once a week so the badge shows the real state of `main`.
 
 A weekly job checks the links in the README and runs `dossier-scribe check` against this repository's own dossier in `dossiers/`. If a cited file changed, it opens one issue. To clear it, re-read the cited files, fix the claims that are no longer true, run `dossier-scribe pin` and commit the dossier and lock.
+
+## Release
+
+A release is a merge. Add a `## [x.y.z] - date` section to `CHANGELOG.md`, run `npm version <patch|minor|major> --no-git-tag-version`, and merge. The `publish` workflow then compares `package.json` with what npm has. If the version is new it runs the tests, publishes with provenance, and makes the `vx.y.z` tag and GitHub Release from that changelog section (`scripts/release.mjs` holds the logic and has tests). While the package is not on npm and the `NPM_TOKEN` secret does not exist, it skips the npm step with a notice and still makes the GitHub Release. To publish later, add the secret and run the workflow by hand from the Actions tab.

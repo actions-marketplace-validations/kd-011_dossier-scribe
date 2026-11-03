@@ -1,4 +1,5 @@
 import { globToRegExp } from './claims.mjs';
+import { jsonKeyValue } from './pin.mjs';
 
 const clip = (s, n = 70) => (s.length > n ? `${s.slice(0, n - 3)}...` : s);
 
@@ -49,7 +50,7 @@ export function lintDocs(ctx, all, selected = all) {
     let blobs = null;
     const blobsFor = () => {
       if (!blobs) {
-        const paths = doc.claims.flatMap((c) => c.sources.filter((s) => !s.glob && s.start !== null).map((s) => s.path));
+        const paths = doc.claims.flatMap((c) => c.sources.filter((s) => !s.glob && (s.start !== null || s.jsonKey)).map((s) => s.path));
         blobs = repo.readMany([...new Set(paths)].filter((p) => repo.tree().has(p)));
       }
       return blobs;
@@ -75,6 +76,10 @@ export function lintDocs(ctx, all, selected = all) {
           if (!any) add(doc, c.line, 'error', `glob "${s.path}" matches no files at HEAD`);
         } else if (!tree.has(s.path)) {
           add(doc, c.line, 'error', `src path "${s.path}" does not exist at HEAD`);
+        } else if (s.jsonKey) {
+          const v = jsonKeyValue(blobsFor().get(s.path) ?? Buffer.alloc(0), s.jsonKey);
+          if (v.invalid) add(doc, c.line, 'error', `"${s.path}" is not valid JSON, so ${s.path}#${s.jsonKey} cannot be cited`);
+          else if (!v.found) add(doc, c.line, 'error', `key "${s.jsonKey}" not found in "${s.path}"`);
         } else if (s.start !== null) {
           const n = lineCount(blobsFor().get(s.path) ?? Buffer.alloc(0));
           if (s.end > n) add(doc, c.line, 'error', `line range ${s.start}-${s.end} of "${s.path}" is out of bounds (file has ${n} lines)`);

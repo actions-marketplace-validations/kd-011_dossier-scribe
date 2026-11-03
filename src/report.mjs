@@ -14,12 +14,13 @@ export function signalFor(r, t) {
   if (s.stale) return `${s.stale} stale`;
   if (s.daysSinceVerified > t.amberDays) return `${s.daysSinceVerified}d old`;
   if (s.new) return `${s.new} new`;
+  if (s.moved) return `${s.moved} moved`;
   return 'ok';
 }
 
 export function claimCount(r) {
   const s = r.summary;
-  return s ? s.ok + s.stale + s.broken + s.new : 0;
+  return s ? s.ok + s.stale + s.broken + s.new + (s.moved ?? 0) : 0;
 }
 
 function sorted(results) {
@@ -34,7 +35,7 @@ export function renderMarkdownReport(results, t) {
   return `${['| Dossier | State | Signal | Claims | Last verified |', '| --- | --- | --- | ---: | --- |', ...rows].join('\n')}\n`;
 }
 
-const driftClaims = (r) => (r.claims ?? []).filter((c) => ['stale', 'broken', 'new'].includes(c.status));
+const driftClaims = (r) => (r.claims ?? []).filter((c) => ['stale', 'broken', 'new', 'moved'].includes(c.status));
 
 const path = (p) => `<code translate="no">${h(p)}</code>`;
 
@@ -42,8 +43,10 @@ function fileLine(f) {
   if (f.change === 'renamed') return `${path(f.path)} <span>renamed to ${h(f.renamedTo)}</span>`;
   if (f.change === 'deleted') return `${path(f.path)} <span>deleted</span>`;
   if (f.change === 'added') return `${path(f.path)} <span>added</span>`;
+  if (f.change === 'keyRemoved') return `${path(`${f.path}#${f.jsonKey}`)} <span>key removed</span>`;
+  if (f.change === 'moved') return `${path(`${f.path}:${f.range.start}-${f.range.end}`)} <span>now at ${f.movedTo.start}-${f.movedTo.end}</span>`;
   const n = f.commits?.length ?? 0;
-  return `${path(f.path + (f.range ? `:${f.range.start}-${f.range.end}` : ''))} <span>${nb(plural(n, 'commit'))}</span>`;
+  return `${path(f.path + (f.jsonKey ? `#${f.jsonKey}` : f.range ? `:${f.range.start}-${f.range.end}` : ''))} <span>${nb(plural(n, 'commit'))}</span>`;
 }
 
 function row(r, t) {
@@ -116,7 +119,7 @@ details[open] .chev{transform:rotate(180deg)}
 .claims{display:grid;gap:18px;padding:4px 16px 20px}
 .claim{display:grid;gap:6px}
 .claim b{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.claim b[data-s=stale],.claim b[data-s=new]{color:var(--amber)}
+.claim b[data-s=stale],.claim b[data-s=new],.claim b[data-s=moved]{color:var(--amber)}
 .claim b[data-s=broken]{color:var(--red)}
 .claim p{overflow-wrap:anywhere}
 .files{display:grid;gap:4px;color:var(--muted);font-size:13px}

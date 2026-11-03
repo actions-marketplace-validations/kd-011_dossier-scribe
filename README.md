@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/kd-011/dossier-scribe/actions/workflows/ci.yml)
 
-Every claim in your project docs cites the file it came from. When that file changes, `dossier-scribe check` tells you which sentence to recheck, not just that the doc is old.
+Every claim in your project docs cites the file it came from. When that file changes, `dossier-scribe check` names the sentence to recheck.
 
 ![A doc line that cites src/auth.js, the commit that changes that file, and dossier-scribe check reporting the claim as stale and a renamed file as broken](docs/screenshots/terminal.png)
 

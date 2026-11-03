@@ -34,7 +34,7 @@ What the rows show:
 - What is left is a range or file that really changed while the claim stayed true. p-limit's `limit.map` was refactored, the claim "passes the index to the mapper" still holds, and it is flagged. The tool cannot tell those apart from a real change. `verify` now shows only the hunks that touch the cited lines, which makes the glance quick.
 - True drift was rare. In p-limit, the claim "the default export takes a concurrency number" became incomplete when `pLimit` started accepting an options object, and it was caught. In express I found none in 95 commits. Pinning does not check that a claim is true, only that the files it cites have not changed since. Two of my claims were wrong on the day I pinned them: p-limit's "a single default export" (it also exports `limitFunction`) and express's Dependabot "weekly" (the file says monthly).
 
-On these two repos that came to one real catch in 28 claims and two to four false alarms per dossier once the citations were narrow. It will not give you zero false alarms. It gives you a short list of claims to open.
+On these two repos that came to one real catch in 28 claims and two to four false alarms per dossier once the citations were narrow, so expect a short list of claims to open and some of them to be fine.
 
 ## What changed because of it
 

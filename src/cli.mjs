@@ -87,7 +87,6 @@ function splitGlobal(argv) {
   return { root, rest, help, version };
 }
 
-/** Per-command option parsing with a friendly usage error. */
 export function parse(args, options, { positionals = 1 } = {}) {
   const { values, positionals: pos } = parseArgs({ args, options, allowPositionals: true, strict: true });
   if (pos.length > positionals) throw new UsageError(`unexpected argument "${pos[positionals]}"`);

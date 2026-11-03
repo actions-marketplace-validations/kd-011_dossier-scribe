@@ -1,14 +1,10 @@
 # Publishes to npm and cuts the GitHub Release when a merge to main raises the version in package.json.
 #
-# To release: put a "## [x.y.z]" section in CHANGELOG.md, run `npm version <patch|minor|major> --no-git-tag-version`,
-# and merge the pull request. This workflow compares package.json's version with what npm has (scripts/release.mjs
-# plan). If it is new, it runs the tests, publishes with provenance, then creates the v<version> tag and a GitHub
-# Release whose notes are that CHANGELOG section. Re-running a failed run (Actions > publish > Re-run failed jobs)
-# finishes whatever is left, so a failed release step does not need a new version.
+# The steps to release are in CONTRIBUTING. scripts/release.mjs works out what is left to do, so re-running a failed
+# run finishes the rest and a failed release step does not need a new version.
 #
-# While the package is not on npm and the NPM_TOKEN repository secret does not exist, the publish steps are skipped
-# with a notice and the run still ends green. The GitHub Release is still made. Once the secret exists, run this
-# workflow by hand (Actions > publish > Run workflow) to publish the version that is already released.
+# With no NPM_TOKEN secret and the package not on npm, the publish steps are skipped with a notice and the run still
+# ends green. Once the secret exists, run this workflow by hand to publish the version that is already released.
 #
 # npm auth, in this order, with no edit needed to switch:
 #   1. The repository secret NPM_TOKEN, when it exists: a granular token with publish rights and bypass 2FA on.

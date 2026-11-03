@@ -176,7 +176,6 @@ export class Repo {
     return exec(this.dir, ['merge-base', '--is-ancestor', sha, 'HEAD']).status === 0;
   }
 
-  /** Date (ms) of a rev, or null. */
   revTime(rev) {
     const out = this.run(['show', '-s', '--format=%ct', rev], { allowFail: true });
     return out ? Number(out.trim()) * 1000 : null;

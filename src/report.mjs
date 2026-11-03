@@ -1,4 +1,3 @@
-// Static report renderers (markdown and one self-contained HTML page).
 import { escapeHtml as h, plural } from './util.mjs';
 
 // Keeps a number and its unit on one line.

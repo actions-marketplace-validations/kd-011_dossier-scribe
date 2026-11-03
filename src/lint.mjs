@@ -10,10 +10,7 @@ function lineCount(buf) {
   return text.endsWith('\n') ? parts - 1 : parts;
 }
 
-/**
- * Lints every doc in `all`. `selected` limits what is reported.
- * Returns [{file, line, severity, message}] sorted by file and line.
- */
+/** `selected` limits what is reported, but duplicate slugs are found across all of `all`. */
 export function lintDocs(ctx, all, selected = all) {
   const problems = [];
   const add = (doc, line, severity, message) => problems.push({ file: doc.rel, line, severity, message });

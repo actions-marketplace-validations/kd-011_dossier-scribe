@@ -72,7 +72,6 @@ test('plan writes publish= and release= to GITHUB_OUTPUT', () => {
   assert.match(text, /^version=0\.3\.0$/m);
 });
 
-// Release notes come from that version's changelog section.
 const CHANGELOG = '# Changelog\n\n## [Unreleased]\n\n### Added\n- next thing\n\n## [0.3.0] - 2026-12-01\n\n### Added\n- the thing\n\n### Fixed\n- a fix\n\n## [0.2.0] - 2026-11-02\n\n- old\n\n[0.3.0]: https://example.invalid/0.3.0\n';
 function notes(version, text = CHANGELOG) {
   const dir = mkdtempSync(join(tmpdir(), 'dscribe-notes-'));
@@ -109,7 +108,6 @@ test('notes: works on the real CHANGELOG for the current version', () => {
   assert.ok(r.stdout.trim().length > 20);
 });
 
-// The publish workflow.
 const publish = read('.github/workflows/publish.yml');
 
 test('publish.yml runs on a push to main that changes package.json, or by hand, never on a tag', () => {

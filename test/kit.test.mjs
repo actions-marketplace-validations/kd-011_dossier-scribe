@@ -1,5 +1,3 @@
-// Acceptance tests for the maintenance kit: Dependabot config, the auto-merge
-// gate, CI shape, the weekly upkeep job, hygiene files and the self-dossier.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync, writeFileSync } from 'node:fs';

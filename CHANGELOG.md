@@ -4,6 +4,12 @@ All notable changes are listed here, newest first. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-09
+
+### Added
+
+- A GitHub Action, `kd-011/dossier-scribe`, runs `lint` and `check` in a workflow and fails the step on stale or broken claims. It takes `root`, `fail-on`, `since` and `lint`. See [docs/action.md](docs/action.md).
+
 ## [0.2.0] - 2026-11-03
 
 Found by pinning real docs for [p-limit](https://github.com/sindresorhus/p-limit) and [express](https://github.com/expressjs/express) a year back and checking them against today's HEAD. The numbers are in [docs/trials.md](docs/trials.md).

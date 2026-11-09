@@ -1,0 +1,44 @@
+name: dossier-scribe
+description: Fail the build when a file cited by your docs changed since the claim was last checked.
+author: kd-011
+branding:
+  icon: file-text
+  color: blue
+
+inputs:
+  root:
+    description: Directory of the repo to check.
+    default: "."
+  fail-on:
+    description: Claim states that fail the step, separated by commas (stale, broken, uncited, new, moved, removed).
+    default: stale,broken
+  since:
+    description: Hide drift whose changes are all older than this (7d, a date or a git ref).
+    default: ""
+  lint:
+    description: Run lint before check, so a malformed citation fails the step.
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 22
+    - name: Run dossier-scribe
+      shell: bash
+      env:
+        IN_ROOT: ${{ inputs.root }}
+        IN_FAIL_ON: ${{ inputs.fail-on }}
+        IN_SINCE: ${{ inputs.since }}
+        IN_LINT: ${{ inputs.lint }}
+      run: |
+        # Inputs go through env vars, never interpolated into the script, so a
+        # crafted value cannot inject shell.
+        bin="$GITHUB_ACTION_PATH/bin/dossier-scribe.mjs"
+        if [ "$IN_LINT" = "true" ]; then
+          node "$bin" lint --root "$IN_ROOT"
+        fi
+        args=(check --root "$IN_ROOT" --fail-on "$IN_FAIL_ON")
+        [ -n "$IN_SINCE" ] && args+=(--since "$IN_SINCE")
+        node "$bin" "${args[@]}"

@@ -43,6 +43,8 @@ git add dossiers && git commit -m "Pin the docs"
 
 From then on, `dossier-scribe check` compares the lock with the repo and exits 1 when a cited file changed. Run it in CI or a pre-push hook ([how](docs/agents-and-ci.md)). When a claim is flagged, `dossier-scribe verify <slug>` shows what it cites next to what changed. Fix the sentence if it is wrong, then `pin` again.
 
+In GitHub Actions, `uses: kd-011/dossier-scribe@v0` does the same. [docs/action.md](docs/action.md) has the workflow and inputs.
+
 ## What check reports
 
 - `ok`: nothing the claim cites has changed.

@@ -59,7 +59,7 @@ jobs:
           node-version: 22
 
       # Pinned to a release tag, never a branch. Bump it in a reviewed change.
-      - run: npm install -g github:kd-011/dossier-scribe#v0.1.0
+      - run: npm install -g github:kd-011/dossier-scribe#v0.2.1
 
       - name: Open, update or close the issue
         env:

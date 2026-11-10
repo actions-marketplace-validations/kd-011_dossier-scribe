@@ -9,12 +9,12 @@
           "specs": [
             "package.json#engines.node"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "package.json#engines.node": {
               "path": "package.json",
-              "blob": "43c76d125115114a165ba24937b029c39586a39b",
-              "commit": "f903a14f6b4fb1a34477e565bfc4b76c210b7942",
+              "blob": "28cb798393edd4f8e44c00a3cecea73242c8f491",
+              "commit": "3a2dfc60b80b019037746e1fef60774559cd18a7",
               "jsonKey": {
                 "key": "engines.node",
                 "hash": "02bc192b69d35e23c1375adfa8377c787dc525d5",
@@ -30,7 +30,7 @@
             "src/claims.mjs:151-159",
             "src/pin.mjs:43-63"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/claims.mjs": {
               "path": "src/claims.mjs",
@@ -60,7 +60,7 @@
           "specs": [
             "test/cli.test.mjs:77-84"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "test/cli.test.mjs": {
               "path": "test/cli.test.mjs",
@@ -80,7 +80,7 @@
           "specs": [
             "src/claims.mjs:15-17"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/claims.mjs": {
               "path": "src/claims.mjs",
@@ -102,7 +102,7 @@
             "src/pin.mjs:17-41",
             "src/check.mjs:44-52"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/pin.mjs": {
               "path": "src/pin.mjs",
@@ -143,7 +143,7 @@
             "src/check.mjs",
             "src/commands/check.mjs:8"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/check.mjs": {
               "path": "src/check.mjs",
@@ -169,7 +169,7 @@
             "src/commands/check.mjs:37",
             "src/cli.mjs:59-61"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/commands/check.mjs": {
               "path": "src/commands/check.mjs",
@@ -199,7 +199,7 @@
           "specs": [
             "src/check.mjs:6-10"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/check.mjs": {
               "path": "src/check.mjs",
@@ -219,7 +219,7 @@
           "specs": [
             "src/report.mjs"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/report.mjs": {
               "path": "src/report.mjs",
@@ -234,7 +234,7 @@
           "specs": [
             "src/collectors.mjs:125-137"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/collectors.mjs": {
               "path": "src/collectors.mjs",
@@ -256,7 +256,7 @@
             "src/commands/queue.mjs:59",
             "src/config.mjs:14"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/commands/queue.mjs": {
               "path": "src/commands/queue.mjs",
@@ -296,7 +296,7 @@
           "specs": [
             "src/git.mjs:47-90"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/git.mjs": {
               "path": "src/git.mjs",
@@ -316,7 +316,7 @@
           "specs": [
             "src/lock.mjs:5"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             "src/lock.mjs": {
               "path": "src/lock.mjs",
@@ -337,12 +337,12 @@
             ".github/workflows/ci.yml:9-10",
             ".github/workflows/ci.yml:24"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             ".github/workflows/ci.yml": {
               "path": ".github/workflows/ci.yml",
-              "blob": "7c3a27a5fb744b6cd60b652c2754b8a8f0cc4923",
-              "commit": "836e3ba54c7dad5e2ac8f2815c61f597139f42a5",
+              "blob": "0365bd111a5ea9a4cb80e27792cda3143ef067fe",
+              "commit": "3a2dfc60b80b019037746e1fef60774559cd18a7",
               "range": {
                 "start": 9,
                 "end": 10,
@@ -351,8 +351,8 @@
             },
             ".github/workflows/ci.yml:24-24": {
               "path": ".github/workflows/ci.yml",
-              "blob": "7c3a27a5fb744b6cd60b652c2754b8a8f0cc4923",
-              "commit": "836e3ba54c7dad5e2ac8f2815c61f597139f42a5",
+              "blob": "0365bd111a5ea9a4cb80e27792cda3143ef067fe",
+              "commit": "3a2dfc60b80b019037746e1fef60774559cd18a7",
               "range": {
                 "start": 24,
                 "end": 24,
@@ -368,7 +368,7 @@
             ".github/dependabot.yml",
             ".github/scripts/automerge-eligible.mjs"
           ],
-          "head": "895e61a61c0d679c9badad64b5535580738efd91",
+          "head": "3a2dfc60b80b019037746e1fef60774559cd18a7",
           "files": {
             ".github/dependabot.yml": {
               "path": ".github/dependabot.yml",
@@ -383,8 +383,8 @@
           }
         }
       },
-      "pinnedAt": "2026-11-03T07:34:51.192Z",
-      "head": "895e61a61c0d679c9badad64b5535580738efd91"
+      "pinnedAt": "2026-11-10T10:12:24.188Z",
+      "head": "3a2dfc60b80b019037746e1fef60774559cd18a7"
     }
   }
 }

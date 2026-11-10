@@ -3,7 +3,7 @@ slug: dossier-scribe
 name: dossier-scribe
 repo: .
 status: active
-last_verified: 2026-11-03
+last_verified: 2026-11-10
 tags: [cli, node, docs]
 ---
 
@@ -34,6 +34,6 @@ A command line tool that keeps project docs true. Each claim in a doc cites the 
 - Dependabot opens grouped weekly updates for GitHub Actions and qualifying ones merge automatically once CI is green. <!-- src: .github/dependabot.yml, .github/scripts/automerge-eligible.mjs -->
 
 <!-- auto:start -->
-- package: dossier-scribe 0.2.0
+- package: dossier-scribe 0.2.1
 - npm scripts (1): test
 <!-- auto:end -->

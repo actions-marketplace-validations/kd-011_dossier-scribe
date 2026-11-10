@@ -23,7 +23,7 @@ jobs:
         os: [ubuntu-latest]
         node: [22, 24]
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v7
@@ -35,7 +35,7 @@ jobs:
     name: the action checks this repo's own dossier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - uses: ./
